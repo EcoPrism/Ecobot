@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { initializeIcons } from "@fluentui/react";
 
-import heroImage from './assets/Hero image.png';
 import ecoprism_logo from './assets/ecoprism_logo.png';
 import "./index.css";
+import HomePageImage from './assets/HomePage.png'; // Import the new image
 
 import Layout from "./pages/layout/Layout";
 import NoPage from "./pages/NoPage";
@@ -16,7 +16,6 @@ import LinkedInLoginButton from "./LinkedInLoginButton";
 initializeIcons();
 
 // Landing page component
-
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -29,46 +28,50 @@ const App: React.FC = () => {
   }, []);
 
   const handleLoginSuccess = (data: any) => {
-    // Handle successful login here (e.g., set user data, update state)
     console.log("Login success:", data);
-    localStorage.setItem("loggedIn", "true"); // Store login state in localStorage
+    localStorage.setItem("loggedIn", "true");
     setLoggedIn(true);
   };
 
   const handleLoginFailure = (error: any) => {
-    // Handle login failure here (e.g., show error message)
     console.error("Login failed:", error);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("loggedIn"); // Remove login state from localStorage
+    localStorage.removeItem("loggedIn");
     setLoggedIn(false);
   };
 
   const LandingPage = () => (
-    <div className="container" style={{ backgroundColor: "#F1F1F1AD" }}>
-      {/* Your landing page JSX */}
-      <img className="EcoLogo" src={ecoprism_logo} alt="Ecoprism" style={{ position: "absolute" }} />
-      <div className="image-container">
-        <img className="Hero" src={heroImage} alt="Hero" style={{ width: "100%", height: "100%" }} />
-      </div>
-      <div className="content-container" style={{ display: "flex", flexDirection: "column", paddingLeft: "200px", backgroundColor: "#FFFFFF" }}>
-        <div className="main-content">
-          <div>Step into EcoPrism's</div>
-          <div>CSRD AI Navigator</div>
-        </div>
-        <div className="center-content">
-          <div>Embark on your journey through CSRD</div>
-          <div>and ESRS requirements</div>
-        </div>
-        <div className="bottom-content">
-          <div>Login to Navigate</div>
-          <LinkedInLoginButton onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure}/>
+    <div className="container" style={{ position: "relative", overflow: "hidden" }}>
+      {/* Full-screen image */}
+      <img
+        className="HomePageImage"
+        src={HomePageImage}
+        alt="HomePage"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: -1, // Place behind other content
+        }}
+      />
+  
+      {/* Content container */}
+      <div className="content-container" style={{ position: "relative", zIndex: 1 }}>
+        <div className="bottom-content" style={{ position: "fixed", bottom: 0, right: 0 }}>
+          {/* Wrapping LinkedInLoginButton in a div with styles */}
+          <div style={{ width: "70%", height: "fixed", cursor: "pointer" }}>
+            <LinkedInLoginButton onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />
+          </div>
         </div>
       </div>
     </div>
   );
-  
+
   return (
     <AppStateProvider>
       <HashRouter>

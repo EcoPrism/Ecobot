@@ -1,4 +1,5 @@
 import React from "react";
+import SignInButton from './assets/SignInButton.png';
 
 interface LinkedInLoginButtonProps {
   onLoginSuccess: (data: any) => void;
@@ -15,24 +16,29 @@ const LinkedInLoginButton: React.FC<LinkedInLoginButtonProps> = ({
   };
 
   const handleFailure = (error: any) => {
-
     onLoginFailure(error);
   };
 
+  const linkedInLogin = () => {
+    handleSuccess({});
+  };
+
+  const buttonContainerStyle = {
+    width: "100%", 
+    height: "auto", 
+    cursor: "pointer",
+    marginBottom: "70%", 
+  };
+
   return (
-    <button
-      onClick={() => handleSuccess({})}
-      style={{
-        backgroundColor: "#0077B5",
-        color: "white",
-        padding: "10px 20px",
-        border: "none",
-        borderRadius: "5px",
-        cursor: "pointer",
-      }}
-    >
-      Log in with LinkedIn
-    </button>
+    <div style={buttonContainerStyle}>
+      <img
+        src={SignInButton} 
+        alt="LinkedIn Logo"
+        style={{ width: "100%", height: "auto" }}
+        onClick={linkedInLogin}
+      />
+    </div>
   );
 };
 
